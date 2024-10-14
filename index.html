@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Docs</title>
+    <style>
+        .container{
+            padding: 10px 20px;
+            display: flex;
+            flex-direction: column;
+            /* align-items: center; */
+        }
+        .post-file, .post-text{
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- <h1>Upload Doc</h1>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="Upload File">
+      </form> -->
+
+      <div class="container">
+        <h2>Upload Docs</h2>
+        <form class="post-file" action="/see" method="POST" enctype="multipart/form-data">
+            <input type="file" name="files" multiple>
+            <input type="submit" value="Upload">
+        </form>
+            <h2>Post Text</h2>
+            <form class="post-text" action="/view" method="POST">
+                <input type="text" name="title" placeholder="Title">
+                <textarea name="text" id="text"></textarea>
+                <input type="submit" value="Post">
+            </form>
+      </div>
+</body>
+</html>
