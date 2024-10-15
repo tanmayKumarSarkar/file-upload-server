@@ -8,6 +8,7 @@ const path = require('path');
 const app = express();
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(__dirname + '/public'));
 
 
 // Define storage for uploaded files
@@ -46,7 +47,7 @@ app.post('/view', function (req, res) {
     let text = req.body.text;
     let textFile = req.body.title;
     let now = Date.now();
-    fs.writeFile(path.join(__dirname, './texts/' + textFile + '-' + now + '.txt'), text, console.log);
+    fs.writeFile(path.join(__dirname, './texts/' + textFile + '-' + now + '.html'), text, console.log);
     res.send('Posted successfully');
   });
 

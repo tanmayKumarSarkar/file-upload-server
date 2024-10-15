@@ -1,0 +1,48 @@
+The COI Sustainability App, developed by COI Energy, is a comprehensive digital energy management platform designed to optimize energy use and reduce waste in buildings. Here are some key features:
+
+Key Features of the COI Sustainability App
+
+Real-Time Insights and Control
+Actionable Insights: Transforms energy data into actionable insights.
+Alerts: Provides alerts to optimize energy resources.
+Control: Allows direct control of energy resources via the mobile app1.
+
+Carbon Management
+Tracking: Tracks and manages the carbon impact of energy efficiency measures.
+Compliance: Helps meet sustainability goals and comply with mandated emissions targets1.
+System Integration
+Compatibility: Works with existing infrastructure.
+Efficiency: Provides turn-key integration with most systems to maximize operational efficiency1.
+
+Custom Reports
+Reporting: Easily share reports on cost savings, energy performance, and emissions.
+Regulations: Helps meet carbon regulations and sustainability goals1.
+Safety and Resilience
+Performance Data: Provides granular asset performance data.
+Notifications: Early notifications of potential electric grid emergencies1.
+
+Community Impact
+KW for Good: Earn tax credits for investing in the community.
+Support: Partners with utilities, NGOs, and public housing authorities to support those in need1.
+These features make the COI Sustainability App a powerful tool for businesses looking to enhance their energy efficiency and sustainability efforts.
+
+
+Key Product Deliverables
+Real-Time Energy Management
+Actionable Insights: Provides real-time data and insights to optimize energy usage.
+Alerts and Notifications: Sends alerts for energy optimization opportunities and potential issues.
+Carbon Management
+Carbon Tracking: Monitors and reports on carbon emissions.
+Compliance Support: Helps meet regulatory requirements and sustainability goals.
+System Integration
+Compatibility: Integrates with existing energy management systems.
+Efficiency: Enhances operational efficiency through seamless integration.
+Custom Reporting
+Detailed Reports: Generates reports on energy savings, performance, and emissions.
+Shareability: Easy sharing of reports with stakeholders.
+Safety and Resilience
+Performance Data: Provides detailed performance data for energy assets.
+Emergency Notifications: Early warnings for potential grid emergencies.
+Community Impact
+KW for Good Program: Earns tax credits for community investments.
+Partnerships: Collaborates with utilities and NGOs to support community needs.
