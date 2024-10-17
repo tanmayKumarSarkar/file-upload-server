@@ -3,6 +3,7 @@ const multer = require('multer');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const path = require('path');
+const PORT = process.env.PORT || 3000;
 
 
 const app = express();
@@ -51,7 +52,7 @@ app.post('/view', function (req, res) {
     res.send('Posted successfully');
   });
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log('Server is running on port 3000');
 });
 
