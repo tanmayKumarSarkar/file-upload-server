@@ -35,7 +35,11 @@ const auth = new google.auth.GoogleAuth({
 const drive = google.drive({version: "v3", auth});
 
 const uploadFile = async (fileObject) => {
+  // fileObject.path.replace("\\","/");
   console.log(fileObject);
+  fs.readdirSync(fileObject.path.split("\\")[0]).forEach(file => {
+    console.log(file);
+  });
   
   const fileMetadata ={
     name: fileObject.filename
@@ -90,6 +94,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
 });
 
 app.post('/see', upload.array('files',50), async function(req, res) {
+  
     var files = req.files;
     for (let f = 0; f < files.length; f += 1) {
       await uploadFile(files[f]);
