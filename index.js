@@ -37,7 +37,9 @@ const drive = google.drive({version: "v3", auth});
 const uploadFile = async (fileObject) => {
   // fileObject.path.replace("\\","/");
   console.log(fileObject);
-  fs.readdirSync(fileObject.path.split("\\")[0]).forEach(file => {
+  console.log("current Dir: ", __dirname, " :: ", path.dirname(__filename));
+  
+  fs.readdirSync("./" + fileObject.path.split("\\")[0]).forEach(file => {
     console.log(file);
   });
   
