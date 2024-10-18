@@ -41,9 +41,79 @@
             outline: none;
             border: 2px solid #0e60be;
         }
+
+        /* The SIMPLE-TOAST - position it at the bottom and in the middle of the screen */
+        #simpleToast {
+        visibility: hidden; /* Hidden by default. Visible on click */
+        min-width: 250px; /* Set a default minimum width */
+        margin-left: -125px; /* Divide value of min-width by 2 */
+        background-color: rgb(21, 199, 125); /* Background color */
+        color: #fff; /* White text color */
+        text-align: center; /* Centered text */
+        border-radius: 2px; /* Rounded borders */
+        padding: 16px 10px; /* Padding */
+        position: fixed; /* Sit on top of the screen */
+        z-index: 1; /* Add a z-index if needed */
+        left: 50%; /* Center the snackbar */
+        top: 15px; /* 30px from the bottom */
+        font-family: monospace;
+        display: inline-flex;
+        line-height: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        }
+        /* #simpleToast span {
+        margin-left: 12px;
+        margin-top: 2px;
+        } */
+
+        #simpleToast span:nth-child(2){
+            cursor: pointer;
+        }
+
+        /* Show the SIMPLE-TOAST when clicking on a button (class added with JavaScript) */
+        #simpleToast.show {
+        visibility: visible; /* Show the SIMPLE-TOAST */
+        /* Add animation: Take 0.5 seconds to fade in and out the SIMPLE-TOAST.
+        However, delay the fade out process for 2.5 seconds */
+        -webkit-animation: fadein 0.5s;/*, fadeout 0.5s 2.5s;*/
+        animation: fadein 0.5s;/*, fadeout 0.5s 2.5s;*/
+        }
+        #simpleToast.hide {
+        -webkit-animation: fadeout 0.5s;/*, fadeout 0.5s 2.5s;*/
+        animation: fadeout 0.5s;/*, fadeout 0.5s 2.5s;*/
+        }
+
+        /* Animations to fade the SIMPLE-TOAST in and out */
+        @-webkit-keyframes fadein {
+        from {top: 0; opacity: 0;}
+        to {top: 15px; opacity: 1;}
+        }
+
+        @keyframes fadein {
+        from {top: 0; opacity: 0;}
+        to {top: 15px; opacity: 1;}
+        }
+
+        @-webkit-keyframes fadeout {
+        from {top: 15px; opacity: 1;}
+        to {top: 0; opacity: 0; visibility: hidden;}
+        }
+
+        @keyframes fadeout {
+        from {top: 15px; opacity: 1;}
+        to {top: 0; opacity: 0; visibility: hidden;}
+        }
+
     </style>
 </head>
 <body>
+    <input type="hidden" id="hiddenVal" name="hiddenVal" value="">
+    <div id="simpleToast" class="hide">
+        <span>⚠️ <span>The notification message...</span></span>
+        <span onclick="closeToast()">❌</span>
+      </div>
     <!-- <h1>Upload Doc</h1>
     <form action="/upload" method="POST" enctype="multipart/form-data">
         <input type="file" name="file">
@@ -53,12 +123,12 @@
       <div class="container">
         <h2>Upload Docs</h2>
         <form class="post-file" action="/see" method="POST" enctype="multipart/form-data">
-            <input type="file" name="files" multiple>
+            <input type="file" name="files" multiple required>
             <input type="submit" value="Upload">
         </form>
             <h2>Post Text</h2>
-            <form class="post-text" action="/view" method="POST">
-                <input type="text" name="title" placeholder="Title">
+            <form class="post-text" action="/view" method="POST" onsubmit="textAreaValidation(e)">
+                <input type="text" name="title" placeholder="Title" required>
                 <textarea name="text" id="textara"></textarea>
                 <input type="submit" value="Post">
             </form>
@@ -75,9 +145,31 @@
         // const quill = new Quill('#editor', {
         // theme: 'snow'
         // });
+        let toastmsg = document.getElementById('hiddenVal')?.value;
+        if(!!toastmsg){
+            console.log(toastmsg);
+            document.querySelector('#simpleToast>span>span').innerHTML = toastmsg;
+            let toastDiv = document.querySelector('#simpleToast')
+            toastDiv.className = toastDiv.className.replace("hide", "show");
+            // toastDiv.className = "show";
+            // After 3 seconds, remove the show class from DIV
+            setTimeout(function(){ toastDiv.className = toastDiv.className.replace("show", "hide"); }, 5000);
+        }
+        
         tinymce.init({
             selector: 'textarea#textara',
             license_key: 'gpl|<your-license-key>'
         });
+
+        function closeToast() {
+            let toastDiv = document.querySelector('#simpleToast')
+            toastDiv.className = toastDiv.className.replace("show", "hide");
+        }
+
+        function textAreaValidation (e){
+            // e.preventDefault()
+            // if(!!document.getElementById('textara').value) e.preventDefault();
+            // return false;
+        }
     </script>
 </html>

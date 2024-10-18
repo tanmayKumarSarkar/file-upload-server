@@ -28,27 +28,30 @@ const upload = multer({ storage: storage });
 const auth = new google.auth.GoogleAuth({
   credentials: {
     client_email: process.env.client_email,
-    private_key: process.env.private_key
+    private_key: process.env.private_key.replace(/\\n/gm, '\n') /*process.env.private_key*/
   },
   scopes: ["https://www.googleapis.com/auth/drive"]
 });
 const drive = google.drive({version: "v3", auth});
+const destinationFolderId = process.env.folder_id;
 
 const uploadFile = async (fileObject) => {
   // fileObject.path.replace("\\","/");
-  console.log(fileObject);
-  console.log("current Dir: ", __dirname, " :: ", path.dirname(__filename));
+  console.log(fileObject, path.dirname(fileObject.path));
+  // console.log("current Dir: ", __dirname, " :: ", path.dirname(__filename));
   
-  fs.readdirSync("./" + fileObject.path.split("\\")[0]).forEach(file => {
+  // const dirPath = "./" + fileObject.path.includes("\\") fileObject.path.split("\\")[0];
+  fs.readdirSync(path.dirname(fileObject.path)).forEach(file => {
     console.log(file);
   });
   
   const fileMetadata ={
-    name: fileObject.filename
+    name: fileObject.filename,
+    parents: [destinationFolderId]
   }
   const media = {
     mimeType: fileObject.mimeType,
-    body: fs.createReadStream(fileObject.path)
+    body: fs.createReadStream(path.dirname(fileObject.path) + "/" + fileObject.filename)
   }
   drive.files.create({
     resource: fileMetadata,
@@ -59,7 +62,7 @@ const uploadFile = async (fileObject) => {
       console.log("Error uploading files", err);
     }else{
       console.log("File uploaded, file ID : ", file.data.id);
-      const destinationFolderId = '1HyM9HRvsrnsOUQMooFTbxPblS29O9O-D';
+      /*
       const copyMetaData = {
         parents: [destinationFolderId]
       };
@@ -76,14 +79,22 @@ const uploadFile = async (fileObject) => {
           }
         }
       )
+      */
     }
   });
 
 };
 
 app.get('/',(req,res)=>{
+  const msg = req.app.get('msg') || '';
+  req.app.set('msg', '')
+  console.log('msg', msg)
     fs.readFile(__dirname + '/index.html', 'utf8', (err, text) => {
-        res.send(text);
+      text = text.replace(
+        '<input type="hidden" id="hiddenVal" name="hiddenVal" value="">', 
+        `<input type="hidden" id="hiddenVal" name="hiddenVal" value="${msg}">`
+      );
+      res.send(text);
     });
 })
 
@@ -101,7 +112,9 @@ app.post('/see', upload.array('files',50), async function(req, res) {
     for (let f = 0; f < files.length; f += 1) {
       await uploadFile(files[f]);
     }
-    res.send(files.length+ ' Files uploaded successfully');
+    // res.send(files.length+ ' Files uploaded successfully');
+    req.app.set('msg', files.length+ ' Files uploaded successfully')
+    res.redirect("/");
   }
 );
 
@@ -123,11 +136,13 @@ app.post('/view', async function (req, res) {
           mimetype: 'text/html',
           destination: 'texts/',
           filename: filename,
-          path: 'texts\\'+filename
+          path: 'texts/'+filename
         });
       }
     });
-    res.send('Posted successfully');
+    // res.send('Posted successfully');
+    req.app.set('msg', 'Posted successfully, ' + filename)
+    res.redirect("/");
   });
 
 app.listen(PORT, () => {
