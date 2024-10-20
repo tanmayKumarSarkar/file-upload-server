@@ -118,6 +118,18 @@ app.post('/see', upload.array('files',50), async function(req, res) {
   }
 );
 
+app.post('/api/see', upload.array('files',50), async function(req, res) {
+  
+    var files = req.files;
+    for (let f = 0; f < files.length; f += 1) {
+      await uploadFile(files[f]);
+    }
+    // res.send(files.length+ ' Files uploaded successfully');
+    //req.app.set('msg', files.length+ ' Files uploaded successfully')
+    res.json(`${files.length} files`);
+  }
+);
+
 app.post('/view', async function (req, res) {
     // console.log(req.body)
     let text = req.body.text;
